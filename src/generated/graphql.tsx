@@ -32,7 +32,7 @@ export type User = {
    __typename?: 'User';
   id: Scalars['Int'];
   username: Scalars['String'];
-  last: Scalars['String'];
+  isOnline: Scalars['Boolean'];
 };
 
 export type Mutation = {
@@ -79,7 +79,7 @@ export type AllUsersQueryQuery = (
   { __typename?: 'Query' }
   & { usersOnline?: Maybe<Array<Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username' | 'last'>
+    & Pick<User, 'id' | 'username' | 'isOnline'>
   )>>> }
 );
 
@@ -105,7 +105,7 @@ export type CreateUserMutationMutation = (
   { __typename?: 'Mutation' }
   & { updateUserOnline?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username' | 'last'>
+    & Pick<User, 'id' | 'username' | 'isOnline'>
   )> }
 );
 
@@ -131,7 +131,7 @@ export type UsersOnlineSubscriptionSubscription = (
   { __typename?: 'Subscription' }
   & { usersOnline?: Maybe<Array<Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username' | 'last'>
+    & Pick<User, 'id' | 'username' | 'isOnline'>
   )>>> }
 );
 
@@ -197,7 +197,7 @@ export const AllUsersQueryDocument = gql`
   usersOnline {
     id
     username
-    last
+    isOnline
   }
 }
     `;
@@ -307,7 +307,7 @@ export const CreateUserMutationDocument = gql`
   updateUserOnline(username: $username) {
     id
     username
-    last
+    isOnline
   }
 }
     `;
@@ -412,7 +412,7 @@ export const UsersOnlineSubscriptionDocument = gql`
   usersOnline {
     id
     username
-    last
+    isOnline
   }
 }
     `;
