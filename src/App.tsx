@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
 
-function App() {
+// App component styles
+import "./App.css";
+import { LoginForm } from "./components/loginForm/loginForm";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory
+} from "react-router-dom";
+import { USER_LOGIN } from "./context/action";
+import { Store } from "./context/context";
+import MainContainer from "./components/MainContainer";
+
+
+
+
+
+
+const App = () => {
+  const globalState = React.useContext(Store) as any;
+  const {user} = globalState.state
+  const {userDispatch} = globalState.dispatch
+  const history = useHistory();
+  const login = async(username: string) => {
+    userDispatch({type:USER_LOGIN, user:username})
+  }
+
+  useEffect(()=>{
+    if(user.isAuthenticated){
+      history.push('/main')
+    }
+    else{
+      history.push('/login')
+    }
+  }, [userDispatch, user, history])
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h2>Chats</h2>
+      <Switch>
+        <Route exact path="/login">
+          <LoginForm login={login} />
+        </Route>
+        <Route exact path="/main">
+          <MainContainer />
+        </Route>
+        
+      </Switch>
+      
     </div>
   );
-}
+};
 
 export default App;
