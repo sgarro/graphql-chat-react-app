@@ -7,7 +7,7 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import React from 'react';
 import { Store } from '../context/context';
-import UserContainer from './users/users';
+import UserContainer from './users/UsersContainer';
 import ChatContainer from './Chat/ChatContainer';
 import InputMessage from './Chat/inputMessage';
 
@@ -49,22 +49,9 @@ import InputMessage from './Chat/inputMessage';
               <UserContainer />
                 <ChatContainer  />
                 <InputMessage />
-              
           </ApolloProvider>
       )
   }
-//   const ChatContainer = ({ initialMessages }) => {
-//     const { data } = useMessageSentSubscriptionSubscription();
-  
-//     if (data) {
-//       initialMessages.push(data.messageSent);
-//     }
-  
-//     return initialMessages.map((chat) => {
-//       console.log(chat)
-//       return <Chatbox key={chat.id} message={chat} />;
-//     });
-//   };
   
   export default MainContainer;
   
