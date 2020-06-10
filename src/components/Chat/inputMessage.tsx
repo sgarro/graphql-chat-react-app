@@ -2,10 +2,12 @@ import { useMessageSentSubscriptionSubscription, useCreateChatMutationMutation }
 import React, { Component, useState } from 'react';
 import { TextField, makeStyles, Theme, createStyles, IconButton } from "@material-ui/core";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Store } from "../../context/context";
 
 const InputMessage = () => {
     const [content, setContent] = useState("");
-    const [from, setFrom] = useState("Matteo");
+    const globalState = React.useContext(Store) as any;
+    const {user} = globalState.state
 
     const [addMessage] = useCreateChatMutationMutation()
 
@@ -20,9 +22,9 @@ const InputMessage = () => {
     );
     const _createChat = async e => {
       if (e.key === 'Enter') {
-        console.log('settingContent')
+        console.log('settingContent', user)
          await addMessage({
-           variables: { content }
+           variables: { from: user.user, content }
          });
          setContent( '' );
        }

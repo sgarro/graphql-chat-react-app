@@ -77,6 +77,7 @@ const UserContainer = () => {
     console.log(error.message);
     return <ErrorAlert error={error.message} />;
   }
+  console.log("USERSONLINE", usersOnline)
 
   return (
     <List>
