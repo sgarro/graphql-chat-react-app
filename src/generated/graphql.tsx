@@ -43,7 +43,7 @@ export type Mutation = {
 
 
 export type MutationCreateChatArgs = {
-  from: Scalars['String'];
+  content: Scalars['String'];
 };
 
 
@@ -84,7 +84,6 @@ export type AllUsersQueryQuery = (
 );
 
 export type CreateChatMutationMutationVariables = {
-  from: Scalars['String'];
   content: Scalars['String'];
 };
 
@@ -247,8 +246,8 @@ export type AllUsersQueryQueryHookResult = ReturnType<typeof useAllUsersQueryQue
 export type AllUsersQueryLazyQueryHookResult = ReturnType<typeof useAllUsersQueryLazyQuery>;
 export type AllUsersQueryQueryResult = ApolloReactCommon.QueryResult<AllUsersQueryQuery, AllUsersQueryQueryVariables>;
 export const CreateChatMutationDocument = gql`
-    mutation CreateChatMutation($from: String!, $content: String!) {
-  createChat(from: $from, content: $content) {
+    mutation CreateChatMutation($content: String!) {
+  createChat(content: $content) {
     id
     from {
       id
