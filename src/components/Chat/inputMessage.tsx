@@ -2,6 +2,7 @@ import { useMessageSentSubscriptionSubscription, useCreateChatMutationMutation }
 import React, { Component, useState } from 'react';
 import { TextField, makeStyles, Theme, createStyles, IconButton } from "@material-ui/core";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import MusixMatchContainer from "../MusixMatch/MuixmatchContainer";
 
 const InputMessage = () => {
     const [content, setContent] = useState("");
@@ -18,16 +19,27 @@ const InputMessage = () => {
       }),
     );
     const _createChat = async e => {
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && !(regEx.test(content))) {
+        const chat = {
+          message: content,
+          extraInfo: {
+            type: 'message'
+          }
+        }
          await addMessage({
-           variables: { content }
+           variables: { content: JSON.stringify(chat) }
          });
          setContent( '' );
        }
      }; 
      const classes = useStyles();
-
+     const regEx = new RegExp('(^\/mxm)')
+     console.log("REGEX", regEx.test(content))
     return (
+      <React.Fragment>
+      {
+        (regEx.test(content)) ? <MusixMatchContainer query={content} /> : ""
+      }
       <TextField
       className={classes.root}
           id="writeMessage"
@@ -38,11 +50,13 @@ const InputMessage = () => {
           onChange={e => setContent(e.target.value)}
           onKeyPress={_createChat}
           >
-          <IconButton aria-label="login" color="primary" onClick={_createChat}>
+          <IconButton disabled={(regEx.test(content))} aria-label="login" color="primary" onClick={_createChat}>
           <ArrowForwardIcon />
         </IconButton>
         </TextField>
+      </React.Fragment>
     )
+    
   }
 
 export default InputMessage
